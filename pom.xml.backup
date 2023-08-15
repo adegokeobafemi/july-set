@@ -21,6 +21,14 @@
     <module>webapp</module>
   </modules>
 
+  <distributionManagement>
+    <site>
+      <id>site-server</id>
+      <name>Test Project Site</name>
+      <url>file:///tmp/maven-project-site</url>
+    </site>
+  </distributionManagement>
+
   <build>
     <plugins>
       <plugin>
@@ -153,13 +161,5 @@
   <prerequisites>
     <maven>3.0.3</maven>
   </prerequisites>
-
-<distributionManagement>
-    <repository>
-        <id>central</id>
-        <name>ip-172-31-34-7.us-west-2.compute.internal-releases</name>
-        <url>http://52.12.83.89:8082/artifactory/july-set-libs-release-local</url>
-    </repository>
-</distributionManagement>
 
 </project>
