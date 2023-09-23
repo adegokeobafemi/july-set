@@ -182,15 +182,13 @@
     <maven>3.0.3</maven>
   </prerequisites>
 
-
 <distributionManagement>
     <repository>
         <id>central</id>
-        <name>ip-172-31-34-7.us-west-2.compute.internal-releases</name>
-        <url>http://52.12.83.89:8082/artifactory/july-set-libs-release-local</url>
+        <name>ip-172-31-42-11.us-west-2.compute.internal-releases</name>
+        <url>http://52.12.83.89:8081/artifactory/joint-devops-libs-release-local</url>
     </repository>
-</distributionManagement>
-
+</distributionManagement>	
 
 </project>
 
