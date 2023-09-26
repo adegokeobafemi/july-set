@@ -98,7 +98,7 @@ pipeline {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "ssh -i oregon-hp.pem -o StrictHostKeyChecking=no ubuntu@34.216.21.169 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@34.216.21.169 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""
                         
                     }
                 }
