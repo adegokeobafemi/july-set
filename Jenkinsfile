@@ -86,9 +86,9 @@ pipeline {
                   sshagent(['ssh_agent']) {
                        sh "chmod 400  oregon-kp.pem"
                        sh "ls -lah"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.194.41.127:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no dockerfile ubuntu@34.194.41.127:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no deploy-dockerhub.yml ubuntu@34.194.41.127:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.216.21.169:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.216.21.169:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no dockerhub.yaml ubuntu@34.216.21.169:/home/ubuntu"
                     }
                 }
             
@@ -98,7 +98,7 @@ pipeline {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "ssh -i oregon-hp.pem -o StrictHostKeyChecking=no ubuntu@34.194.41.127 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} deploy-dockerhub.yml\""
+                        sh "ssh -i oregon-hp.pem -o StrictHostKeyChecking=no ubuntu@34.216.21.169 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""
                         
                     }
                 }
@@ -109,8 +109,8 @@ pipeline {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no deployment.yaml ubuntu@18.205.98.141:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no service.yaml ubuntu@18.205.98.141:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no deployment.yaml ubuntu@44.233.10.40:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no service.yaml ubuntu@44.233.10.40:/home/ubuntu"
                     }
                 }
             
@@ -128,7 +128,7 @@ pipeline {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl set image deployment/class-deploy2 customcontainer=adegokeobafemi/lab:${BUILD_NUMBER}\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl set image deployment/ranty customcontainer=adegokeobafemi/lab:${BUILD_NUMBER}\""
                         //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl delete pod class-deploy2\""
                         //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl apply -f deploy.yml\""
                         //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl apply -f service.yml\""
