@@ -1,0 +1,22 @@
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranty-deploy
+  labels:
+    app: ranty
+spec:
+ replicas: 2
+ selector:
+   matchLabels:
+     app: ranty
+ template:
+   metadata:
+     labels:
+       app: ranty
+   spec:
+     containers:
+     - name: iterncon
+       image: adegokeobafemi/july-devops:26072023
+       ports:
+       - containerPort: 8080
