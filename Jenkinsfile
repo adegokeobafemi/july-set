@@ -86,23 +86,20 @@ pipeline {
                   sshagent(['ssh_agent']) {
                        sh "chmod 400  oregon-kp.pem"
                        sh "ls -lah"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.216.21.169:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.216.21.169:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no dockerhub.yaml ubuntu@34.216.21.169:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.214.89.85:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.214.89.85:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no dockerhub.yaml ubuntu@34.214.89.85:/home/ubuntu"
                     }
                 }
-            
         } 
 
     stage('Build Container Image') {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@34.216.21.169 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""
-                        
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@34.214.89.85 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""       
                     }
                 }
-            
         } 
 
     stage('Copy Deployment & Service Defination to K8s Master') {
@@ -113,7 +110,6 @@ pipeline {
                         sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no service.yaml ubuntu@44.233.10.40:/home/ubuntu"
                     }
                 }
-            
         } 
 
     stage('Waiting for Approvals') {
@@ -121,23 +117,20 @@ pipeline {
         steps{
 
 				input('Test Completed ? Please provide  Approvals for Prod Release ?')
-			  }
-            
+			 }
     }     
     stage('Deploy Artifacts to Production') {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl set image deployment/ranty customcontainer=adegokeobafemi/july-devops:${BUILD_NUMBER}\""
-                        //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl delete pod class-deploy2\""
-                        //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl apply -f deploy.yml\""
-                        //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@18.205.98.141 -C \"kubectl apply -f service.yml\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl set image deployment/ranty-deploy customcontainer=adegokeobafemi/july-devops:${BUILD_NUMBER}\""
+                        //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl delete pod class-deploy2\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deploy.yaml\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\""
                         
                     }
-                }
-            
+                }  
         } 
-         
    } 
 }
 
