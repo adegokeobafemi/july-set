@@ -86,9 +86,9 @@ pipeline {
                   sshagent(['ssh_agent']) {
                        sh "chmod 400  oregon-kp.pem"
                        sh "ls -lah"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.214.89.85:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@34.214.89.85:/home/ubuntu"
-                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no dockerhub.yaml ubuntu@34.214.89.85:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@54.68.224.137:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no Dockerfile ubuntu@54.68.224.137:/home/ubuntu"
+                        sh "scp -i oregon-kp.pem -o StrictHostKeyChecking=no dockerhub.yaml ubuntu@54.68.224.137:/home/ubuntu"
                     }
                 }
         } 
@@ -97,7 +97,7 @@ pipeline {
             
             steps {
                   sshagent(['ssh_key']) {
-                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@34.214.89.85 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""       
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@54.68.224.137 -C \"ansible-playbook  -vvv -e build_number=${BUILD_NUMBER} dockerhub.yaml\""       
                     }
                 }
         } 
@@ -127,14 +127,6 @@ pipeline {
                         //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl delete pod class-deploy2\""
                         sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deployment.yaml\""
                         sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\""
-		    
-                        //withCredentials([sshUserPrivateKey(credentialsId: "ssh_agent", keyFileVariable: 'keyfile')]){
-			  //sh"""
-                        //scp -i ${keyfile} -o StrictHostKeyChecking=no deployment.yaml ubuntu@44.233.10.40:/home/ubuntu
-                        //scp -i ${keyfile} -o StrictHostKeyChecking=no service.yaml ubuntu@44.233.10.40:/home/ubuntu
-                        //ssh -i ${keyfile} -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deployment.yaml\"
-                        //ssh -i ${keyfile} -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\"
-                        //"""
                     }
                 }  
         } 
