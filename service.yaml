@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: ranty-service
   labels:
-    app: service
+    app: ranty
 spec:
   selector:
     app: ranty
