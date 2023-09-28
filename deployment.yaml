@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ranty-deploy
+  name: july-devops
   labels:
     app: ranty
 spec:
