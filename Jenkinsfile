@@ -122,19 +122,19 @@ pipeline {
     stage('Deploy Artifacts to Production') {
             
             steps {
-                  //sshagent(['ssh_key']) {
+                  sshagent(['ssh_key']) {
                         //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl set image deployment/ranty customcontainer=adegokeobafemi/july-devops:${BUILD_NUMBER}\""
                         //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl delete pod class-deploy2\""
-                        //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deployment.yaml\""
-                        //sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deployment.yaml\""
+                        sh "ssh -i oregon-kp.pem -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\""
 		    
-                        withCredentials([sshUserPrivateKey(credentialsId: "ssh_agent", keyFileVariable: 'keyfile')]){
-			  sh"""
+                        //withCredentials([sshUserPrivateKey(credentialsId: "ssh_agent", keyFileVariable: 'keyfile')]){
+			  //sh"""
                         //scp -i ${keyfile} -o StrictHostKeyChecking=no deployment.yaml ubuntu@44.233.10.40:/home/ubuntu
                         //scp -i ${keyfile} -o StrictHostKeyChecking=no service.yaml ubuntu@44.233.10.40:/home/ubuntu
-                        ssh -i ${keyfile} -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deployment.yaml\"
-                        ssh -i ${keyfile} -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\"
-                        """
+                        //ssh -i ${keyfile} -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f deployment.yaml\"
+                        //ssh -i ${keyfile} -o StrictHostKeyChecking=no ubuntu@44.233.10.40 -C \"kubectl apply -f service.yaml\"
+                        //"""
                     }
                 }  
         } 
