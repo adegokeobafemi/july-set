@@ -17,7 +17,7 @@ spec:
    spec:
      containers:
      - name: iterncon
-       image: adegokeobafemi/july-devops:latest
+       image: adegokeobafemi/july-devops:50
        imagePullPolicy: "Always"
        ports:
        - containerPort: 8080
