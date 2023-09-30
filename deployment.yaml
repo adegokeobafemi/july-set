@@ -17,6 +17,6 @@ spec:
    spec:
      containers:
      - name: iterncon
-       image: adegokeobafemi/july-devops:46
+       image: adegokeobafemi/july-devops:latest
        ports:
        - containerPort: 8080
